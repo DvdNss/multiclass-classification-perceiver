@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-<h3 align="center">PROJECT_NAME</h3>
+<h3 align="center">NLP Perceiver</h3>
 <p align="center">
   <img src="PROJECT_IMG_LINK" />
 </p>
@@ -10,7 +10,7 @@
 
 ## About The Project 
 
-PROJECT_ABOUT
+This project aims to set [DeepMind Language Perceiver](https://huggingface.co/deepmind/language-perceiver) usable for most NLP tasks easily.
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -43,7 +43,7 @@ PROJECT_ABOUT
 1. Clone the repo
 
 ```shell
-git clone PROJECT_LINK
+git clone https://github.com/DvdNss/nlp-perceiver
 ```
 
 2. Install requirements
@@ -58,11 +58,28 @@ pip install -r requirements.txt
 
 ### Structure
 
-PROJECT_STRUCTURE
+* `data/`: contains torch data files
+* `source/`: contains main scripts
+  * `databuilder.py`: loads, transforms and saves datasets
+  * `mapping.py`: mapping functions used for transforms
+  * `train.py`: training script
 
 ### Example
 
-PROJECT_STEPS
+1. Set a correct mapping function in `source/databuilder.py` for a given dataset
+```python
+# Map inputs
+formatted_dataset = dataset.map(lambda row: tokenizer(row['text'], # <-- Map function here
+                                padding="max_length", 
+                                truncation=True),
+                                batched=True)
+```
+
+2. Build the torch files using `source/databuilder.py` script
+```shell
+python source/databuilder.py --dataset go_emotions --split train+validation --output_dir data
+```
+> Once the script stops running, there should be a .pt file in the `output_dir` for each split you selected. 
 
 <!-- CONTACT -->
 

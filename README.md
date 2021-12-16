@@ -61,7 +61,6 @@ pip install -r requirements.txt
 * `data/`: contains torch data files
 * `source/`: contains main scripts
   * `databuilder.py`: loads, transforms and saves datasets
-  * `mapping.py`: mapping functions used for transforms
   * `train.py`: training script
 
 ### Example

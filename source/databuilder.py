@@ -11,8 +11,7 @@ import os
 
 import torch
 from datasets import load_dataset, list_datasets
-
-from mapping import map_function
+from transformers import PerceiverTokenizer
 
 
 def main(args=None):
@@ -30,6 +29,9 @@ def main(args=None):
     parser.add_argument('--output_dir', help='Output directory. ', default='data')
     parser = parser.parse_args(args)
 
+    # Load tokenizer
+    tokenizer = PerceiverTokenizer.from_pretrained("deepmind/language-perceiver")
+
     for subset in parser.split.split('+'):
         # Load dataset
         if parser.dataset in list_datasets():
@@ -40,7 +42,8 @@ def main(args=None):
                                     f"list_datasets() to list all available datasets. ")
 
         # Map inputs
-        formatted_dataset = dataset.map(map_function, batched=True)
+        formatted_dataset = dataset.map(lambda row: tokenizer(row['text'], padding="max_length", truncation=True),
+                                        batched=True)
 
         # Build tensor
         formatted_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'labels'])

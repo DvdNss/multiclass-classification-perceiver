@@ -94,7 +94,7 @@ def main():
         model.train()
 
         # Init logs
-        accu_logs = loss_logs = mem_logs = []
+        accu_logs, loss_logs, mem_logs = [], [], []
 
         # Init pbar
         with tqdm(train_dataloader, unit='batches') as progression:

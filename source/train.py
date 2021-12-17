@@ -33,7 +33,7 @@ def main():
     parser.add_argument('--validation_data',
                         help='Path to validaton torch file. If not provided, no validation will occur. ', default=None)
     parser.add_argument('--batch_size', help='Batch size. ', default=1, type=int)
-    parser.add_argument('--lr', help='Learning rate. ', default=5e-5)
+    parser.add_argument('--lr', help='Learning rate. ', default=5e-5, type=float)
     parser.add_argument('--epochs', help='Number of epochs. ', default=1, type=int)
     parser.add_argument('--output_dir', help='Output directory. ', default='model')
     parser = parser.parse_args()

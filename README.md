@@ -115,6 +115,23 @@ python source/train.py --train_data train_data --validation_data validation_data
 python source/evaluate.py --model model_path --validation_data validation_data --batch_size batch_size
 ```
 
+5. Inference using the `source/pipeline.py` script (see use case in `inference_example.py`)
+```python
+from pipeline import MultiLabelPipeline, inputs_to_dataset
+
+model_path = '../model/perceiver-e2-acc0.pt'
+
+# Load pipeline
+pipeline = MultiLabelPipeline(model_path=model_path)
+
+# Build a little dataset
+inputs = ['This this a test.', 'Another test.', 'The final test.']
+
+# Make inference
+outputs = pipeline(inputs_to_dataset(inputs), batch_size=3)
+print(outputs)
+```
+
 <!-- CONTACT -->
 
 ## Contact

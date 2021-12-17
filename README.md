@@ -60,25 +60,60 @@ pip install -r requirements.txt
 
 * `data/`: contains torch data files
 * `source/`: contains main scripts
+* `model/`: contains models
   * `databuilder.py`: loads, transforms and saves datasets
   * `train.py`: training script
+  * `mapping.py`: mapping functions
+  * `evaluate.py`: evaluation script
 
 ### Example
 
-1. Set a correct mapping function in `source/databuilder.py` for a given dataset
+1. Set correct mapping functions in `source/mapping.py` for a given dataset
 ```python
 # Map inputs
-formatted_dataset = dataset.map(lambda row: tokenizer(row['text'], # <-- Map function here
-                                padding="max_length", 
-                                truncation=True),
-                                batched=True)
+def map_inputs(row: dict):
+    """
+    Map inputs with a given format.
+
+    :param row: dataset row
+    :return:
+    """
+
+    return row['text']
+
+
+def map_targets(labels: List[int]):
+    """
+    Map targets with a given format.
+
+    :param labels: list of labels
+    :return:
+    """
+
+    targets = [0] * 28
+    for label in labels:
+        targets[label] = 1
+
+    return {'targets': targets}
 ```
 
 2. Build the torch files using `source/databuilder.py` script
 ```shell
-python source/databuilder.py --dataset go_emotions --split train+validation --output_dir data
+python source/databuilder.py --dataset go_emotions --split train+validation --output_dir data --max_size max_size
 ```
 > Once the script stops running, there should be a .pt file in the `output_dir` for each split you selected. 
+
+3. Train your model using `source/train.py` script
+```shell
+python source/train.py --train_data train_data --validation_data validation_data --batch_size batch_size --lr lr --epochs epochs --output_dir output_dir
+```
+> A model will be saved in `output_dir` each epoch, which will be named as : \
+> `output_dir/perceiver-e<epoch>-acc<eval_acc>.pt`.
+
+4. Evaluate your model using `source/evaluate.py` script
+```shell
+python source/evaluate.py --model model_path --validation_data validation_data --batch_size batch_size
+```
 
 <!-- CONTACT -->
 

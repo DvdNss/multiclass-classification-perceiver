@@ -36,7 +36,7 @@ def evaluate(model=None, validation_dataloader=None):
     # Evaluate model
     model.eval()
     accu_logs = []
-    with tqdm(validation_dataloader) as progression:
+    with tqdm(validation_dataloader, unit='batches') as progression:
         for batch in progression:
             progression.set_description('Evaluation')
             # Get inputs

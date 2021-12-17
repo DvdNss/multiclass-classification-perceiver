@@ -24,10 +24,8 @@ def main():
     :return:
     """
 
-    # TODO: add logger ?? (not even needed, will see)
     # TODO: add wandb
     # TODO: model logs in config file
-    # TODO: make labels a script OR global variable ?
 
     # Create parser and its args
     parser = argparse.ArgumentParser()

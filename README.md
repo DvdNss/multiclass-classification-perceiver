@@ -65,6 +65,8 @@ pip install -r requirements.txt
   * `train.py`: training script
   * `mapping.py`: mapping functions
   * `evaluate.py`: evaluation script
+  * `pipeline.py`: model pipeline (inference)
+  * `inference_example.py`: inference use case
 
 ### Example
 

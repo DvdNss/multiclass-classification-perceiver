@@ -47,44 +47,13 @@ def main(args=None):
             raise FileNotFoundError(f"Couldn't find dataset {parser.dataset} or subset {parser.split}. Please use "
                                     f"list_datasets() to list all available datasets. ")
 
-        # Load labels
-        labels = ["admiration",
-                  "amusement",
-                  "anger",
-                  "annoyance",
-                  "approval",
-                  "caring",
-                  "confusion",
-                  "curiosity",
-                  "desire",
-                  "disappointment",
-                  "disapproval",
-                  "disgust",
-                  "embarrassment",
-                  "excitement",
-                  "fear",
-                  "gratitude",
-                  "grief",
-                  "joy",
-                  "love",
-                  "nervousness",
-                  "optimism",
-                  "pride",
-                  "realization",
-                  "relief",
-                  "remorse",
-                  "sadness",
-                  "surprise",
-                  "neutral"]
-        id2label = {idx: label for idx, label in enumerate(labels)}
-        label2id = {label: idx for idx, label in enumerate(labels)}
-
         # Map inputs
         formatted_dataset = dataset.map(lambda row: tokenizer(map_inputs(row), padding="max_length", truncation=True),
-                                        batched=True, remove_columns=['id', 'text'])
+                                        batched=True, remove_columns=['id', 'text'], desc='Tokenizing')
 
         # Map labels
-        formatted_dataset = formatted_dataset.map(lambda row: map_targets(row['labels']), remove_columns=['labels'])
+        formatted_dataset = formatted_dataset.map(lambda row: map_targets(row['labels']),
+                                                  remove_columns=['labels'], desc='Mapping targets')
 
         # Build tensor
         formatted_dataset.set_format(type='torch', columns=['input_ids', 'attention_mask', 'targets'])

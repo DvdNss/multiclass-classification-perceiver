@@ -5,9 +5,13 @@ Author: @DvdNss
 
 Created on 12/17/2021
 """
+from typing import List
+
 import torch
+from datasets import Dataset
 from torch.utils.data import DataLoader
-from tqdm import trange, tqdm
+from tqdm import tqdm
+from transformers import PerceiverTokenizer
 
 
 def _map_outputs(predictions):
@@ -62,19 +66,17 @@ class MultiLabelPipeline:
     Multi label classification pipeline.
     """
 
-    def __init__(self, model, tokenizer, **kwargs):
+    def __init__(self, model_path):
         """
         Init MLC pipeline.
 
-        :param model: model to use
-        :param tokenizer: tokenizer to use
-        :param kwargs: other args
+        :param model_path: model to use
         """
 
         # Init attributes
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = model.eval().to(self.device)
-        self.tokenizer = tokenizer
+        self.model = torch.load(model_path).eval().to(self.device)
+        self.tokenizer = PerceiverTokenizer.from_pretrained('deepmind/language-perceiver')
 
     def __call__(self, dataset, batch_size: int = 4):
         """
@@ -99,7 +101,7 @@ class MultiLabelPipeline:
                 progression.set_description('Inference')
                 # Forward
                 outputs = self.model(inputs=batch['input_ids'].to(self.device),
-                                     attention_mask=batch['attention_mask'].to(self.device),)
+                                     attention_mask=batch['attention_mask'].to(self.device), )
 
                 # Outputs
                 predictions = outputs.logits.cpu().detach().numpy()
@@ -118,3 +120,16 @@ class MultiLabelPipeline:
                 progression.set_postfix(memory=f"{round(sum(mem_logs) / len(mem_logs), 2)}Go")
 
         return classes
+
+
+def inputs_to_dataset(inputs: List[str]):
+    """
+    Convert a list of strings to a dataset object.
+
+    :param inputs: list of strings
+    :return:
+    """
+
+    inputs = {'text': [input for input in inputs]}
+
+    return Dataset.from_dict(inputs)

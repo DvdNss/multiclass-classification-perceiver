@@ -45,41 +45,11 @@ def main():
     validation_dataloader = DataLoader(torch.load(parser.validation_data),
                                        batch_size=parser.batch_size) if parser.validation_data is not None else None
 
-    # Load labels
-    labels = ["admiration",
-              "amusement",
-              "anger",
-              "annoyance",
-              "approval",
-              "caring",
-              "confusion",
-              "curiosity",
-              "desire",
-              "disappointment",
-              "disapproval",
-              "disgust",
-              "embarrassment",
-              "excitement",
-              "fear",
-              "gratitude",
-              "grief",
-              "joy",
-              "love",
-              "nervousness",
-              "optimism",
-              "pride",
-              "realization",
-              "relief",
-              "remorse",
-              "sadness",
-              "surprise",
-              "neutral"]
-
     # Load model
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = PerceiverForSequenceClassification.from_pretrained('deepmind/language-perceiver',
                                                                problem_type='multi_label_classification',
-                                                               num_labels=len(labels))
+                                                               num_labels=28)
 
     # Send model to device
     model.to(device)

@@ -12,6 +12,9 @@
 
 This project aims to set [DeepMind Language Perceiver](https://huggingface.co/deepmind/language-perceiver) usable for most NLP tasks easily.
 
+[__Web App here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
+
+
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>

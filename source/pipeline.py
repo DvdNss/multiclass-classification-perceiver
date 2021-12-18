@@ -75,7 +75,10 @@ class MultiLabelPipeline:
 
         # Init attributes
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-        self.model = torch.load(model_path).eval().to(self.device)
+        if self.device == 'cuda':
+            self.model = torch.load(model_path).eval().to(self.device)
+        else:
+            self.model = torch.load(model_path, map_location=torch.device('cpu')).eval().to(self.device)
         self.tokenizer = PerceiverTokenizer.from_pretrained('deepmind/language-perceiver')
 
     def __call__(self, dataset, batch_size: int = 4):

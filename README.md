@@ -3,7 +3,7 @@
 <p align="center">
 <h3 align="center">NLP Perceiver</h3>
 <p align="center">
-  <img src="PROJECT_IMG_LINK" />
+  <img src="https://github.com/DvdNss/nlp-perceiver/blob/main/resource/home.JPG?raw=true" />
 </p>
 
 <!-- ABOUT THE PROJECT -->
@@ -61,12 +61,14 @@ pip install -r requirements.txt
 * `data/`: contains torch data files
 * `source/`: contains main scripts
 * `model/`: contains models
+* `resource/`: contains readme images
   * `databuilder.py`: loads, transforms and saves datasets
   * `train.py`: training script
   * `mapping.py`: mapping functions
   * `evaluate.py`: evaluation script
   * `pipeline.py`: model pipeline (inference)
   * `inference_example.py`: inference use case
+* `app.py`: streamlit app script
 
 ### Example
 
@@ -132,6 +134,11 @@ inputs = ['This this a test.', 'Another test.', 'The final test.']
 # Make inference
 outputs = pipeline(inputs_to_dataset(inputs), batch_size=3)
 print(outputs)
+```
+
+6. Finally, run streamlit app
+```shell
+streamlit run app.py
 ```
 
 <!-- CONTACT -->

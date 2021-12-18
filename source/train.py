@@ -92,9 +92,7 @@ def main():
                     references = batch["targets"].numpy()
 
                     # Binarize predictions
-                    for i, example in enumerate(predictions):
-                        for j, category in enumerate(example):
-                            predictions[i][j] = 1 if category > 0.5 else 0
+                    predictions = torch.as_tensor(predictions > 0.5, dtype=torch.int32)
 
                     # Retrieve acc and mem
                     accuracy = accuracy_score(y_true=references, y_pred=predictions)

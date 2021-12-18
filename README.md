@@ -62,9 +62,9 @@ pip install -r requirements.txt
 ### Structure
 
 * `data/`: contains torch data files
-* `source/`: contains main scripts
 * `model/`: contains models
 * `resource/`: contains readme images
+* `source/`: contains main scripts
   * `databuilder.py`: loads, transforms and saves datasets
   * `train.py`: training script
   * `mapping.py`: mapping functions

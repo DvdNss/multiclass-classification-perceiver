@@ -24,9 +24,6 @@ def main():
     :return:
     """
 
-    # TODO: add wandb
-    # TODO: model logs in config file
-
     # Create parser and its args
     parser = argparse.ArgumentParser()
     parser.add_argument('--train_data', help='Path to train torch file. ', default='data/train.pt')

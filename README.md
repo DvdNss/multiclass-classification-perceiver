@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-<h3 align="center">Multiclass Emotion Classification using DeepMind's Perceiver</h3>
+<h3 align="center">Multiclass Classification using DeepMind's Perceiver</h3>
 <p align="center">
   <img src="https://github.com/DvdNss/nlp-perceiver/blob/main/resource/home.JPG?raw=true" />
 </p>
@@ -10,7 +10,7 @@
 
 ## About The Project 
 
-This project aims to set [DeepMind Language Perceiver](https://huggingface.co/deepmind/language-perceiver) usable for most NLP tasks easily.
+This project aims to make [DeepMind's Language Perceiver](https://huggingface.co/deepmind/language-perceiver) easily usable for Multiclass Classification.
 
 [__Web App here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
 

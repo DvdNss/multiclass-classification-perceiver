@@ -12,7 +12,7 @@
 
 This project aims to make [DeepMind's Language Perceiver](https://huggingface.co/deepmind/language-perceiver) easily usable for Multiclass Classification.
 
-[__Web App here!__](https://share.streamlit.io/dvdnss/facemaskdetection/main/app.py)
+[__Web App here!__](https://share.streamlit.io/dvdnss/multiclass-classification-perceiver/main/app.py)
 
 
 <!-- TABLE OF CONTENTS -->

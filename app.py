@@ -112,10 +112,10 @@ model = load_model(model_path=f"model/{model_path}.pt")
 right.write(model.device)
 
 if split:
-    if not inputs.isspace():
+    if not inputs.isspace() and inputs != "":
         with st.spinner('Processing text... This may take a while.'):
             left.write(model(inputs_to_dataset(sent_tokenize(inputs)), batch_size=1))
 else:
-    if not inputs.isspace():
+    if not inputs.isspace() and inputs != "":
         with st.spinner('Processing text... This may take a while.'):
             left.write(model(inputs_to_dataset([inputs]), batch_size=1))

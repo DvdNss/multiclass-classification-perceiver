@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-<h3 align="center">NLP Perceiver</h3>
+<h3 align="center">Multiclass Emotion Classification using DeepMind's Perceiver</h3>
 <p align="center">
   <img src="https://github.com/DvdNss/nlp-perceiver/blob/main/resource/home.JPG?raw=true" />
 </p>

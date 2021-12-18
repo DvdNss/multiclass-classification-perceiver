@@ -27,11 +27,10 @@ def download_models(ids):
     nltk.download('punkt')
 
     # Download model from drive if not stored locally
-    with st.spinner('Downloading models, this may take a minute...'):
-        for key in ids:
-            if not os.path.isfile(f"model/{key}.pt"):
-                url = f"https://drive.google.com/uc?id={ids[key]}"
-                gdown.download(url=url, output=f"model/{key}.pt")
+    for key in ids:
+        if not os.path.isfile(f"model/{key}.pt"):
+            url = f"https://drive.google.com/uc?id={ids[key]}"
+            gdown.download(url=url, output=f"model/{key}.pt")
 
 
 @st.cache

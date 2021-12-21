@@ -99,28 +99,29 @@ class MultiLabelPipeline:
         classes = []
         mem_logs = []
 
-        with tqdm(dataloader, unit='batches') as progression:
-            for batch in progression:
-                progression.set_description('Inference')
-                # Forward
-                outputs = self.model(inputs=batch['input_ids'].to(self.device),
-                                     attention_mask=batch['attention_mask'].to(self.device), )
+        with torch.no_grad():
+            with tqdm(dataloader, unit='batches') as progression:
+                for batch in progression:
+                    progression.set_description('Inference')
+                    # Forward
+                    outputs = self.model(inputs=batch['input_ids'].to(self.device),
+                                         attention_mask=batch['attention_mask'].to(self.device), )
 
-                # Outputs
-                predictions = outputs.logits.cpu().detach().numpy()
+                    # Outputs
+                    predictions = outputs.logits.cpu().detach().numpy()
 
-                # Map predictions to classes
-                batch_classes = _map_outputs(predictions)
+                    # Map predictions to classes
+                    batch_classes = _map_outputs(predictions)
 
-                for row in batch_classes:
-                    classes.append(row)
+                    for row in batch_classes:
+                        classes.append(row)
 
-                # Retrieve memory usage
-                memory = round(torch.cuda.memory_reserved(self.device) / 1e9, 2)
-                mem_logs.append(memory)
+                    # Retrieve memory usage
+                    memory = round(torch.cuda.memory_reserved(self.device) / 1e9, 2)
+                    mem_logs.append(memory)
 
-                # Update pbar
-                progression.set_postfix(memory=f"{round(sum(mem_logs) / len(mem_logs), 2)}Go")
+                    # Update pbar
+                    progression.set_postfix(memory=f"{round(sum(mem_logs) / len(mem_logs), 2)}Go")
 
         return classes
 

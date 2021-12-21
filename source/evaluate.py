@@ -36,28 +36,30 @@ def evaluate(model=None, validation_dataloader=None):
     # Evaluate model
     model.eval()
     accu_logs = []
-    with tqdm(validation_dataloader, unit='batches') as progression:
-        for batch in progression:
-            progression.set_description('Evaluation')
-            # Get inputs
-            inputs = batch['input_ids'].to(device)
-            attention_mask = batch['attention_mask'].to(device)
 
-            # Predict
-            outputs = model(inputs=inputs, attention_mask=attention_mask)
-            predictions = outputs.logits.cpu().detach().numpy()
-            references = batch["targets"].numpy()
+    with torch.no_grad():
+        with tqdm(validation_dataloader, unit='batches') as progression:
+            for batch in progression:
+                progression.set_description('Evaluation')
+                # Get inputs
+                inputs = batch['input_ids'].to(device)
+                attention_mask = batch['attention_mask'].to(device)
 
-            # Binarize predictions
-            for i, example in enumerate(predictions):
-                for j, category in enumerate(example):
-                    predictions[i][j] = 1 if category > 0.5 else 0
+                # Predict
+                outputs = model(inputs=inputs, attention_mask=attention_mask)
+                predictions = outputs.logits.cpu().detach().numpy()
+                references = batch["targets"].numpy()
 
-            # Compute accuracy for batch and add to buffer
-            accuracy = accuracy_score(y_true=references, y_pred=predictions)
-            accu_logs.append(accuracy)
-            global_acc = sum(accu_logs) / len(accu_logs) * 100
-            progression.set_postfix(accuracy=global_acc)
+                # Binarize predictions
+                for i, example in enumerate(predictions):
+                    for j, category in enumerate(example):
+                        predictions[i][j] = 1 if category > 0.5 else 0
+
+                # Compute accuracy for batch and add to buffer
+                accuracy = accuracy_score(y_true=references, y_pred=predictions)
+                accu_logs.append(accuracy)
+                global_acc = sum(accu_logs) / len(accu_logs) * 100
+                progression.set_postfix(accuracy=global_acc)
 
     print("")
     return global_acc
